@@ -1,16 +1,37 @@
 package com.rainvic.relativecalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
+
+public class MainActivity extends AppCompatActivity implements MoPubView.BannerAdListener{
+
+    private MoPubView moPubView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setMopub();
+
+    }
+
+    private void setMopub() {
+        moPubView = (MoPubView) findViewById(R.id.adview);
+        moPubView.setAdUnitId(ConstantAPI.MOPUB_UNIT_ID);
+        moPubView.loadAd();
+        moPubView.setBannerAdListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        moPubView.destroy();
+        super.onDestroy();
     }
 
     @Override
@@ -33,5 +54,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBannerLoaded(MoPubView moPubView) {
+
+    }
+
+    @Override
+    public void onBannerFailed(MoPubView moPubView, MoPubErrorCode moPubErrorCode) {
+
+    }
+
+    @Override
+    public void onBannerClicked(MoPubView moPubView) {
+
+    }
+
+    @Override
+    public void onBannerExpanded(MoPubView moPubView) {
+
+    }
+
+    @Override
+    public void onBannerCollapsed(MoPubView moPubView) {
+
     }
 }
